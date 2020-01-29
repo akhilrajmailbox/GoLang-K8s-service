@@ -21,21 +21,8 @@ env:
 mongodb:
   enabled: true
   usePassword: false
-  metrics:
-    enabled: true
-  livenessProbe:
-    enbaled: true
-  readinessProbe:
-    enabled: true
   replicaSet:
-    enabled: true
-    replicas:
-      secondary: 0
-      arbiter: 0
-    pdb:
-      minAvailable:
-        secondary: 0
-        arbiter: 0
+    enabled: false
   persistence:
     enabled: true
     # storageClass: "-"
