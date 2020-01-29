@@ -7,6 +7,9 @@ image:
   tag: hello-world
   pullPolicy: Always
 
+initContainers:
+  entrypoint: "apt-get update && apt-get install wget -y && cd /data ; wget https://speed.hetzner.de/100MB.bin"
+
 service:
   # Cluster IP or LoadBalancer
   type: LoadBalancer

@@ -59,7 +59,7 @@ spec:
             command: 
             - /bin/bash
             image: ubuntu:16.04
-            imagePullPolicy: IfNotPresent
+            imagePullPolicy: {{ .Values.image.pullPolicy }}
             name: init-data
             volumeMounts:
               - mountPath: /data
