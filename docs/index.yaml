@@ -3,11 +3,11 @@ entries:
   hello-world:
   - apiVersion: v1
     appVersion: "1.0"
-    created: 2020-01-29T11:37:01.51688946+05:30
+    created: 2020-01-29T11:41:40.860795721+05:30
     description: A Helm chart for Kubernetes
-    digest: a4732b3a25de7ddad073dbf49e93dcd4f4ef6b4338864c7891f1085c8d5f6172
+    digest: c6a68963424110360d16cd8d8270304fe7c6d96ad2bfa4a6981949838bf81e8c
     name: hello-world
     urls:
     - https://akhilrajmailbox.github.io/GoLang-K8s-service/docs/hello-world-0.1.0.tgz
     version: 0.1.0
-generated: 2020-01-29T11:37:01.51524144+05:30
+generated: 2020-01-29T11:41:40.859307799+05:30

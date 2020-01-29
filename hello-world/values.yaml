@@ -20,6 +20,7 @@ env:
 
 mongodb:
   enabled: true
+  usePassword: false
   replicaSet:
     enabled: true
     replicas:

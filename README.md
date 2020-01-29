@@ -69,6 +69,7 @@ The following table lists the configurable parameters of the hell-world chart an
 | `env.mongodb`                      | mongodb url                               | `hello-world-mongodb:27017`                                              |
 | `mongodb.enabled`                  | configure mongodb                                | `true`                                             |
 | `mongodb.replicaSet.enabled`       | mongodb helm charts configuration                                         | `true`                                                     |
+| `mongodb.usePassword`              | mongodb helm charts configuration     | `false`                                                    |
 | `mongodb.replicaSet.replicas.secondary`     | mongodb helm charts configuration`| `0`                                                |
 | `mongodb.replicaSet.replicas.arbiter`                      | mongodb helm charts configuration     | `0`                                                    |
 | `mongodb.replicaSet.pdb.minAvailable.secondary`                      | mongodb helm charts configuration     | `0`                                                    |
