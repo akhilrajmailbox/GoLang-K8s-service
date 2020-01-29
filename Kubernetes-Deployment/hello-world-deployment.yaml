@@ -51,8 +51,8 @@ spec:
             periodSeconds: 10
           livenessProbe:
             httpGet:
-              path: /
-              port: 27017
+              path: /hellops
+              port: 8080
             initialDelaySeconds: 10
             periodSeconds: 10
           env:

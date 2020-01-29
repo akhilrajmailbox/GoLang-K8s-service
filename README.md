@@ -11,6 +11,9 @@
 * using `persistentVolumeClaim` for MongoDB and Hello wold Application
 
 
+**Note The `storageclass` Configuration is not mandatory to run this services, but I conifgured to showcase how we can achieve high throughput / io operation and capability to increase the disk size anytime even in production system**
+
+
 ## Local Deployment (docker-compose deployment)
 
 for Local testing purpose, `docker-compose and docker` can be used.
