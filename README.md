@@ -2,6 +2,7 @@
 
 ## Deployment Features
 
+* `helm charts` and `kubectl YAML` deployment
 * `multi-stage` builds in dockerfile
 * using `alpine` docker image for security and lightweight.
 * custom `fast` storageclass which will allow you to increase the disk size any time with help of storageclass varibale : `allowVolumeExpansion: true`
