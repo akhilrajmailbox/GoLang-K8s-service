@@ -22,6 +22,14 @@ spec:
       labels:
 {{ include "labels.standard" . | indent 8 }}
     spec:
+      volumes:
+      - name: data 
+        {{- if .Values.persistence.enabled }}
+        persistentVolumeClaim:
+          claimName: {{ .Values.persistence.existingClaim | default (include "hello-world.fullname" .) }}
+        {{- else }}
+          emptyDir: {}
+        {{- end }}
       containers:
         - image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
@@ -43,6 +51,9 @@ spec:
               port: 8080
             initialDelaySeconds: 10
             periodSeconds: 10
+          volumeMounts:
+          - mountPath: /data
+            name: data
       initContainers:
         - args:
           - "-c"
@@ -52,6 +63,9 @@ spec:
           image: ubuntu:16.04
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           name: init-data
+          volumeMounts:
+            - mountPath: /data
+              name: data
           resources:
 {{ toYaml .Values.resources | indent 12 }}
     {{- with .Values.nodeSelector }}
