@@ -39,12 +39,76 @@ helm install ar-demo/hello-world -n hello-world --namespace=demo
 helm install ar-demo/hello-world -n hello-world --namespace=demo -f custom-values.yaml
 ```
 
+
+## Configuration
+
+The following table lists the configurable parameters of the hell-world chart and default values.
+
+| Parameter                          | Description                                      | Default                                                   |
+| ---------------------------------- | ------------------------------------------------ | ---------------------------------------------------------- |
+| `replicaCount`                     | number of pods to deploy                         | `1`                                                   |
+| `maxSurge`                         | control the rolling update process               | `1`                                                   |
+| `maxUnavailable`                   | control the rolling update process               | `1`                                                   |
+| `image.repository`                 | `hello-world` image repository                   | `akhilrajmailbox/golang`                                                   |
+| `image.tag`                        | `hello-world` image tag                          | `hello-world`                                                   |
+| `initContainers.entrypoint`        | `hello-world` init container entrypoint          | `apt-get update && apt-get install wget -y && cd /data ; wget https://speed.hetzner.de/100MB.bin`                                                   |
+| `env.mongodb`                      | mongodb url                               | `hello-world-mongodb:27017`                                              |
+| `mongodb.enabled`                  | configure mongodb                                | `true`                                             |
+| `mongodb.replicaSet.enabled`       | mongodb helm charts configuration                                         | `true`                                                     |
+| `mongodb.replicaSet.replicas.secondary`     | mongodb helm charts configuration`| `0`                                                |
+| `mongodb.replicaSet.replicas.arbiter`                      | mongodb helm charts configuration     | `0`                                                    |
+| `mongodb.replicaSet.pdb.minAvailable.secondary`                      | mongodb helm charts configuration     | `0`                                                    |
+| `mongodb.replicaSet.pdb.minAvailable.arbiter`                      | mongodb helm charts configuration    | `0`                                                    |
+| `mongodb.persistence.enabled`      | mongodb helm charts configuration     | `true`                                                    |
+| `mongodb.persistence.accessMode`   | mongodb helm charts configuration     | `ReadWriteOnce`                                                    |
+| `mongodb.persistence.size`         | mongodb helm charts configuration     | `10Gi`                                                    |
+| `mongodb.persistence.storageClass` | mongodb helm charts configuration                     | `default`                                                  |
+| `persistence.enabled`              | Use volume as ReadOnly or ReadWrite              | `ReadWriteOnce`                                            |
+| `persistence.accessMode`           | Use volume as ReadOnly or ReadWrite              | `ReadWriteOnce`                                            |
+| `persistence.annotations`          | Persistent Volume annotations                    | `{}`                                                       |
+| `persistence.size`                 | Size of data volume (adjust for production!)     | `10Gi`                                                    |
+| `persistence.storageClass`         | Storage class of backing PVC                     | `default`                                                  |
+| `resources.requests.cpu`           | CPU/Memory resource requests/limits              | `100m`                                                      |
+| `nodeSelector`                     | Node labels for pod assignment                   | `{}`                                                       |
+| `tolerations`                      | Toleration labels for pod assignment             | `[]`                                                       |
+| `affinity`                         | Affinity settings for pod assignment             | `{}`                                                       |
+
+
+* The affinity configured as follows for High availability and better performance
+
+```
+affinity:
+  podAffinity:
+    preferredDuringSchedulingIgnoredDuringExecution:
+    - weight: 95
+      podAffinityTerm:
+        labelSelector:
+          matchExpressions:
+          - key: app
+            operator: In
+            values:
+            - mongodb
+        topologyKey: kubernetes.io/hostname
+  podAntiAffinity:
+    preferredDuringSchedulingIgnoredDuringExecution:
+    - podAffinityTerm:
+        labelSelector:
+          matchLabels:
+            app: hello-world
+        topologyKey: kubernetes.io/hostname
+      weight: 95
+```
+
+
+
 ## Kubernetes Deployment with YAML (kubectl)
 
 * Create Namespaces
 ```
 kubectl apply -f namespace.yaml
 ```
+
+**Optional Configuration for Storageclass**
 
 *  Configure `fast` storageclass with `allowVolumeExpansion: true` (for an example I choose AWS and Azure as Cloud Providers)
 
@@ -56,6 +120,19 @@ kubectl apply -f storageclass/AWS-storageclass.yaml
 **Azure Cloud**
 ```
 kubectl apply -f storageclass/Azure-storageclass.yaml
+```
+
+**Warning: If you don't need to configure `fast` storageclass, then update your `hello-world-pvc.yaml` and `mongo-pvc.yaml` with `storageClassName: default` instelad of `storageClassName: fast`**
+
+so your `pvc` files will lok like as follows :
+
+```
+apiVersion: v1
+kind: PersistentVolumeClaim
+.....
+.....
+.....
+  storageClassName: default
 ```
 
 * Create Persistent Volume Claim and Deploy `MongoDB` on namespace `mongo`

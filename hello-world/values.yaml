@@ -16,7 +16,7 @@ service:
   port: 8080
 
 env:
-  mongodb: mongodb:27017
+  mongodb: hello-world-mongodb:27017
 
 mongodb:
   enabled: true
@@ -31,14 +31,14 @@ mongodb:
         arbiter: 0
   persistence:
     enabled: true
-    storageClass: "fast"
+    # storageClass: "-"
     accessMode: ReadWriteOnce
     size: 10Gi
 
 persistence:
   enabled: true
   annotations: {}
-  storageClass: "fast"
+  # storageClass: "-"
   accessMode: ReadWriteOnce
   size: 10Gi
   # existingClaim: ""
