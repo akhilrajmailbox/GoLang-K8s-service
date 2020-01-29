@@ -1,10 +1,5 @@
 # Hello World App with Go
 
-## Deployment Option
-
-* helm
-* kubectl
-
 ## Deployment Features
 
 * `multi-stage` builds in dockerfile
@@ -31,7 +26,20 @@ docker-compose up -d
 ```
 
 
-## Kubernetes Deployment
+### Deployment Option on Kubernetes
+
+* helm
+* kubectl
+
+#### Helm Deployment (TL;DR)
+
+```
+helm repo add ar-demo https://akhilrajmailbox.github.io/GoLang-K8s-service/docs
+helm install ar-demo/hello-world -n hello-world --namespace=demo
+helm install ar-demo/hello-world -n hello-world --namespace=demo -f custom-values.yaml
+```
+
+## Kubernetes Deployment with YAML (kubectl)
 
 * Create Namespaces
 ```
