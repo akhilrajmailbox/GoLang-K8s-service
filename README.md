@@ -31,11 +31,25 @@ docker-compose up -d
 * helm
 * kubectl
 
+#### Helm-tiller-configuration (configure this only if your helm client version < 3.x.x)
+
+* this is a server level helm configuration and it required for helm version 2.x.x (RBAC)
+```
+kubectl create serviceaccount --namespace kube-system tiller
+kubectl create clusterrolebinding tiller-cluster-rule --clusterrole=cluster-admin --serviceaccount=kube-system:tiller
+helm init --service-account tiller
+```
+
+
 #### Helm Deployment (TL;DR)
 
 ```
 helm repo add ar-demo https://akhilrajmailbox.github.io/GoLang-K8s-service/docs
 helm install ar-demo/hello-world -n hello-world --namespace=demo
+```
+
+##### configure with your custom environment values from `custom-values.yaml`
+```
 helm install ar-demo/hello-world -n hello-world --namespace=demo -f custom-values.yaml
 ```
 
