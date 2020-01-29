@@ -22,14 +22,6 @@ spec:
       labels:
 {{ include "labels.standard" . | indent 8 }}
     spec:
-      volumes:
-      - name: data 
-        {{- if .Values.persistence.enabled }}
-        persistentVolumeClaim:
-          claimName: {{ .Values.persistence.existingClaim | default (include "hello-world.fullname" .) }}
-        {{- else }}
-          emptyDir: {}
-        {{- end }}
       containers:
         - image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
