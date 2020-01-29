@@ -51,7 +51,7 @@ The following table lists the configurable parameters of the hell-world chart an
 | `maxUnavailable`                   | control the rolling update process               | `1`                                                   |
 | `image.repository`                 | `hello-world` image repository                   | `akhilrajmailbox/golang`                                                   |
 | `image.tag`                        | `hello-world` image tag                          | `hello-world`                                                   |
-| `initContainers.entrypoint`        | `hello-world` init container entrypoint          | `apt-get update && apt-get install wget -y && cd /data ; wget https://speed.hetzner.de/100MB.bin`                                                   |
+| `initContainers.entrypoint`        | `hello-world` init container entrypoint          | [entrypoint](#initContainers-entrypoint)                                                   |
 | `env.mongodb`                      | mongodb url                               | `hello-world-mongodb:27017`                                              |
 | `mongodb.enabled`                  | configure mongodb                                | `true`                                             |
 | `mongodb.replicaSet.enabled`       | mongodb helm charts configuration                                         | `true`                                                     |
@@ -71,34 +71,7 @@ The following table lists the configurable parameters of the hell-world chart an
 | `resources.requests.cpu`           | CPU/Memory resource requests/limits              | `100m`                                                      |
 | `nodeSelector`                     | Node labels for pod assignment                   | `{}`                                                       |
 | `tolerations`                      | Toleration labels for pod assignment             | `[]`                                                       |
-| `affinity`                         | Affinity settings for pod assignment             | `{}`                                                       |
-
-
-* The affinity configured as follows for High availability and better performance
-
-```
-affinity:
-  podAffinity:
-    preferredDuringSchedulingIgnoredDuringExecution:
-    - weight: 95
-      podAffinityTerm:
-        labelSelector:
-          matchExpressions:
-          - key: app
-            operator: In
-            values:
-            - mongodb
-        topologyKey: kubernetes.io/hostname
-  podAntiAffinity:
-    preferredDuringSchedulingIgnoredDuringExecution:
-    - podAffinityTerm:
-        labelSelector:
-          matchLabels:
-            app: hello-world
-        topologyKey: kubernetes.io/hostname
-      weight: 95
-```
-
+| `affinity`                         | Affinity settings for pod assignment             | [affinity](#affinity)                                                       |
 
 
 ## Kubernetes Deployment with YAML (kubectl)
@@ -150,4 +123,36 @@ kubectl apply -f hello-world-service.yaml
 ```
 
 
+#### Reference for Default Values for helm charts
 
+##### initContainers-entrypoint
+
+```
+apt-get update && apt-get install wget -y && cd /data ; wget https://speed.hetzner.de/100MB.bin
+```
+
+##### affinity
+* The affinity configured as follows for High availability and better performance
+
+```
+affinity:
+  podAffinity:
+    preferredDuringSchedulingIgnoredDuringExecution:
+    - weight: 95
+      podAffinityTerm:
+        labelSelector:
+          matchExpressions:
+          - key: app
+            operator: In
+            values:
+            - mongodb
+        topologyKey: kubernetes.io/hostname
+  podAntiAffinity:
+    preferredDuringSchedulingIgnoredDuringExecution:
+    - podAffinityTerm:
+        labelSelector:
+          matchLabels:
+            app: hello-world
+        topologyKey: kubernetes.io/hostname
+      weight: 95
+```
