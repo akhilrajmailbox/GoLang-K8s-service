@@ -1,7 +1,14 @@
-## Hello World App with Go
+# Hello World App with Go
+
+## Deployment Option
+
+* helm
+* kubectl
 
 ## Deployment Features
 
+* `multi-stage` builds in dockerfile
+* using `alpine` docker image for security and lightweight.
 * custom `fast` storageclass which will allow you to increase the disk size any time with help of storageclass varibale : `allowVolumeExpansion: true`
 * The hello-world application use `initcontainer` to donwload the data to `/data` folder
 * Using `podAffinity` for increse the performance (read and write to mongodb) 

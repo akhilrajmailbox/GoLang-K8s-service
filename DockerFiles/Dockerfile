@@ -9,8 +9,9 @@ RUN go clean -cache \
     && go build service.go
 
 # This results in a single layer image
-FROM ubuntu:16.04
+FROM alpine:latest
 MAINTAINER Akhil Raj <akhilrajmailbox@gmail.com>
+RUN apk --no-cache add ca-certificates bash libc6-compat
 ENV MONGO_URL mongo
 COPY --from=gobuild /opt/data/service /opt/service
 ADD entrypoint.sh /opt/entrypoint.sh
