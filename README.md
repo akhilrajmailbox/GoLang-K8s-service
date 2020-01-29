@@ -6,7 +6,7 @@
 * `multi-stage` builds in dockerfile
 * using `alpine` docker image for security and lightweight.
 * custom `fast` storageclass which will allow you to increase the disk size any time with help of storageclass varibale : `allowVolumeExpansion: true`
-* The hello-world application use `initcontainer` to donwload the data to `/data` folder
+* The hello-world application use `initcontainer` to download the data to `/data` folder
 * Using `podAffinity` for increse the performance (read and write to mongodb) 
 * Using `podAntiAffinity` for High availability incase if we have cluster
 * `readinessProbe` wait till the service up before accepting the request
