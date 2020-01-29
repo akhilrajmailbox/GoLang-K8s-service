@@ -55,9 +55,6 @@ spec:
           image: ubuntu:16.04
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           name: init-data
-          volumeMounts:
-            - mountPath: /data
-              name: data
           resources:
 {{ toYaml .Values.resources | indent 12 }}
     {{- with .Values.nodeSelector }}
